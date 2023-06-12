@@ -1,10 +1,13 @@
-# ベースイメージの設定などを行う
 FROM node:20.3.0
 
 WORKDIR /app
 
-# # プロジェクトのファイルをコピー
+# プロジェクトのファイルをコピー
 COPY ./app/package.json ./app/package-lock.json ./
+
+# nextのグローバルインストールを追加
+RUN npm install -g next
+
 RUN npm ci
 
 # アプリケーションのソースコードをコピー
