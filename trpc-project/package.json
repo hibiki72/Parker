@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "trpc-project",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,6 +11,7 @@
   "dependencies": {
     "@prisma/client": "^4.15.0",
     "@trpc/client": "^10.30.0",
+    "@trpc/next": "^10.30.0",
     "@trpc/react-query": "^10.30.0",
     "@trpc/server": "^10.30.0",
     "@types/node": "20.3.0",

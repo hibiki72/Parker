@@ -1,9 +1,9 @@
 FROM node:20.3.0
 
-WORKDIR /app
+WORKDIR /trpc-project
 
 # プロジェクトのファイルをコピー
-COPY ./app/package.json ./app/package-lock.json ./
+COPY ./trpc-project/package.json ./trpc-project/package-lock.json ./
 
 # nextのグローバルインストールを追加
 RUN npm install -g next
@@ -11,7 +11,7 @@ RUN npm install -g next
 RUN npm ci
 
 # アプリケーションのソースコードをコピー
-COPY ./app .
+COPY ./trpc-project .
 
 # ビルドコマンドの実行
 RUN npm run build
