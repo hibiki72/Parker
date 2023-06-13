@@ -25,3 +25,6 @@ rm:
 
 into_server:
 	${SERVER_CMD} sh
+
+migrate:
+	${SERVER_CMD} npx prisma migrate dev --name init
