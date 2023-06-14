@@ -1,5 +1,7 @@
 import { z } from 'zod';
-import { procedure, router } from './trpc';
+import { PrismaClient } from '@prisma/client';
+import { publicProcedure as procedure, router } from './trpc';
+const prisma = new PrismaClient();
 
 export const appRouter = router({
   hello: procedure
@@ -13,6 +15,59 @@ export const appRouter = router({
         greeting: `hello ${opts.input.text}`,
       };
     }),
+
+  getTodos: procedure
+    .query(async () =>{
+      return prisma.todo.findMany()
+    }),
+
+  createTodo: procedure
+    .input(z.object({
+      title: z.string(),
+    }))
+    .mutation(async (opts) => {
+      const { input } = opts;
+      return prisma.todo.create({ data: {title: input.title} })
+    }),
+
+  updateTodo: procedure
+    .input(z.object({
+      id: z.number(),
+      completed: z.boolean(),
+    }))
+    .mutation(async (opts) => {
+      const { input } = opts;
+      return prisma.todo.update({
+        where: { id: input.id },
+        data: { completed: input.completed },
+      })
+    }),
+
+  deleteTodo: procedure
+    .input(z.object({
+      id: z.number(),
+    }))
+    .mutation(async (opts) => {
+      const { input } = opts;
+      return prisma.todo.delete({
+        where: { id: input.id },
+      })
+    }),
 });
+
+// const appRouter = router({
+//   // ...
+//   userCreate: publicProcedure
+//     .input(z.object({ name: z.string() }))
+//     .mutation(async (opts) => {
+//       const { input } = opts;
+               
+
+//       // Create a new user in the database
+//       const user = await db.user.create(input);
+
+//       return user;
+//     }),
+// });
 
 export type AppRouter = typeof appRouter;
