@@ -27,7 +27,6 @@ export const appRouter = router({
       const { input } = opts;
       return prisma.todo.create({ data: {title: input.title} })
     }),
-
   updateTodo: procedure
     .input(z.object({
       id: z.number(),
@@ -40,7 +39,6 @@ export const appRouter = router({
         data: { completed: input.completed },
       })
     }),
-
   deleteTodo: procedure
     .input(z.object({
       id: z.number(),

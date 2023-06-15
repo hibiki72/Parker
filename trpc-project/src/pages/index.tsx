@@ -15,7 +15,6 @@ import { useState } from 'react';
 //   );
 // }
 
-
 export default function Home() {
   const [newTodo, setNewTodo] = useState('');
 
@@ -23,15 +22,12 @@ export default function Home() {
   const createTodo = trpc.createTodo.useMutation();
   const updateTodo = trpc.updateTodo.useMutation();
   const deleteTodo = trpc.deleteTodo.useMutation();
-
   if (todos.isLoading) {
     return <div>Loading...</div>;
   }
-
   if (todos.error) {
     return <div>Error: {todos.error.message}</div>;
   }
-
   return (
     <div>
       {todos.data.map((todo) => (
