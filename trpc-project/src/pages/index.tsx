@@ -2,12 +2,27 @@ import { trpc } from '../utils/trpc';
 import { useState } from 'react';
 
 export default function Home() {
-  
   const [newTodo, setNewTodo] = useState('');
   const todos = trpc.getTodos.useQuery();
   const createTodo = trpc.createTodo.useMutation();
   const updateTodo = trpc.updateTodo.useMutation();
   const deleteTodo = trpc.deleteTodo.useMutation();
+
+  const createTodoMutation = async () => {
+    await createTodo.mutateAsync({ title: newTodo });
+    todos.refetch();
+  };
+
+  const deleteTodoMutation = async (id: number) => {
+    console.log(typeof id)
+    await deleteTodo.mutateAsync({ id });
+    todos.refetch();
+  };
+
+  const updateTodoMutation = async (id: number, completed: boolean) => {
+    await updateTodo.mutateAsync({ id, completed });
+    todos.refetch();
+  };
 
   if (todos.isLoading) {
     return <div>Loading...</div>;
@@ -22,19 +37,16 @@ export default function Home() {
           <input
             type="checkbox"
             checked={todo.completed}
-            onChange={(e) =>
-              updateTodo.mutate({ id: todo.id, completed: e.target.checked })
-            }
+            onChange={(e) => updateTodoMutation(todo.id, e.target.checked)}
           />
           {todo.title}
-          {todo.id}
-          <button onClick={() => deleteTodo.mutate(todo)}>Delete</button>
+          <button onClick={() => deleteTodoMutation(todo.id)}>Delete</button>
         </div>
       ))}
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          createTodo.mutate({ title: newTodo });
+          createTodoMutation();
           setNewTodo('');
         }}
       >
