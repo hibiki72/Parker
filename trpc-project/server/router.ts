@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { PrismaClient } from '@prisma/client';
 import { publicProcedure as procedure, router } from './trpc';
 const prisma = new PrismaClient();
+
 export const appRouter = router({
   hello: procedure
     .input(
@@ -14,12 +15,10 @@ export const appRouter = router({
         greeting: `hello ${opts.input.text}`,
       };
     }),
-
   getTodos: procedure
     .query(async () =>{
       return prisma.todo.findMany()
     }),
-
   createTodo: procedure
     .input(z.object({
       title: z.string(),
