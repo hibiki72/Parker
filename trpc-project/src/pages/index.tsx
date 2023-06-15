@@ -1,27 +1,14 @@
 import { trpc } from '../utils/trpc';
 import { useState } from 'react';
 
-// export default function IndexPage() {
-//   const hello = trpc.hello.useQuery({ text: 'world' });
-
-//   if (!hello.data) {  
-//     return <div>Loading...</div>;
-//   }
-
-//   return (
-//     <div>
-//       <p>{hello.data.greeting}</p>
-//     </div>
-//   );
-// }
-
 export default function Home() {
+  
   const [newTodo, setNewTodo] = useState('');
-
   const todos = trpc.getTodos.useQuery();
   const createTodo = trpc.createTodo.useMutation();
   const updateTodo = trpc.updateTodo.useMutation();
   const deleteTodo = trpc.deleteTodo.useMutation();
+
   if (todos.isLoading) {
     return <div>Loading...</div>;
   }

@@ -4,17 +4,6 @@ import { publicProcedure as procedure, router } from './trpc';
 const prisma = new PrismaClient();
 
 export const appRouter = router({
-  hello: procedure
-    .input(
-      z.object({
-        text: z.string().max(10),
-      })
-    )
-    .query((opts) => {
-      return {
-        greeting: `hello ${opts.input.text}`,
-      };
-    }),
   getTodos: procedure
     .query(async () =>{
       return prisma.todo.findMany()
