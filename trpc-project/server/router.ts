@@ -55,19 +55,4 @@ export const appRouter = router({
     }),
 });
 
-// const appRouter = router({
-//   // ...
-//   userCreate: publicProcedure
-//     .input(z.object({ name: z.string() }))
-//     .mutation(async (opts) => {
-//       const { input } = opts;
-               
-
-//       // Create a new user in the database
-//       const user = await db.user.create(input);
-
-//       return user;
-//     }),
-// });
-
 export type AppRouter = typeof appRouter;
